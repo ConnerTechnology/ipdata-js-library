@@ -177,7 +177,7 @@ export default class IPData {
       this.cache.set(ip || DEFAULT_IP, data);
       return this.cache.get(ip || DEFAULT_IP);
     } catch (e) {
-      const { response } = e as AxiosError;
+      const { response } = e as AxiosError<LookupResponse>;
       if (response) {
         return { ...response.data, status: response.status };
       }
@@ -220,9 +220,9 @@ export default class IPData {
       }
       return responses;
     } catch (e) {
-      const { response } = e as AxiosError;
+      const { response } = e as AxiosError<LookupResponse>;
       if (response) {
-        return { ...response.data, status: response.status };
+        return [{ ...response.data, status: response.status }];
       }
       throw e;
     }
